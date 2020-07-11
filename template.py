@@ -51,7 +51,7 @@ def calculate_marginal_log_likelihood(K):
     inv_Ka, Ka = decompose_K(K)
     logp = -(1.0/2.0) * y * inv_Ka * y - (1.0/2.0)*np.log(np.linalg.det(Ka)) - (n/2.0)*np.log(2.0*np.pi)
 
-def calculate_gradient_teta1(data, teta1,teta2,teta3):
+def Ka_gradient_teta1(data, teta1,teta2,teta3):
     dK_dteta1 = np.zeros((data.shape[0], data.shape[0]))
     for i in np.arange(data.shape[0]):
         for j in np.arange(data.shape[0]):
@@ -62,7 +62,7 @@ def calculate_gradient_teta1(data, teta1,teta2,teta3):
                 dK_dteta1[i,j] = np.exp(- distance / (2 * np.square(teta2))) + teta3
     return dK_dteta1
 
-def calculate_gradient_teta2(data, teta1,teta2,teta3):
+def Ka_gradient_teta2(data, teta1,teta2,teta3):
     dK_dteta2 = np.zeros((data.shape[0], data.shape[0]))
     for i in np.arange(data.shape[0]):
         for j in np.arange(data.shape[0]):
@@ -73,7 +73,7 @@ def calculate_gradient_teta2(data, teta1,teta2,teta3):
                 dK_dteta2[i,j] = teta1* np.exp(- distance / (2 * np.square(teta2))) * (distance / np.power(teta2,3)) + teta3
     return dK_dteta2
 
-def calculate_gradient_teta3(data, teta1,teta2,teta3):
+def Ka_gradient_teta3(data, teta1,teta2,teta3):
     dK_dteta3 = np.zeros((data.shape[0], data.shape[0]))
     for i in np.arange(data.shape[0]):
         for j in np.arange(data.shape[0]):
