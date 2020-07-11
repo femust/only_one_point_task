@@ -7,7 +7,7 @@ def regression():
     normalized_data = normalize_data(regression_data)
     training_data, test_data = randomly_sampled_data(normalized_data)
     print("Training data size: " + str(training_data.shape) + " Testing data size: " + str(test_data.shape))
-
+    K(training_data, 1,1,1)
 
 
 
@@ -31,6 +31,22 @@ def normalize_data(data):
     #vector normalization
     normalized_data = data / np.linalg.norm(data, axis = 1).reshape(-1,1)
     return normalized_data
+
+def K(data, teta1, teta2, teta3):
+    K = np.zeros((data.shape[0], data.shape[0]))
+    for i in np.arange(data.shape[0]):
+        for j in np.arange(data.shape[0]):
+            distance = np.linalg.norm(data[i,:] - data[j,:])
+            if (i == j):
+                K[i,j] = teta1 * np.exp(- distance / (2* np.square(teta2)))
+            else:
+                K[i,j] = teta1 * np.exp(- distance / (2 * np.square(teta2))) + teta3
+    print("K calculated, shape " + str(K.shape))
+    return K
+
+def decompose_K(K):
+    return np.linalg.cholesky(K)
+
 
 
 regression()
