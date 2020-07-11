@@ -1,9 +1,13 @@
 import random
 import numpy as np
 
-def regression(data):
-    #TODO:: regression
-    print(data.shape)
+def regression():
+    # TODO:: regression
+    regression_data = data_reader("data/regression.txt")
+    normalized_data = normalize_data(regression_data)
+    training_data, test_data = randomly_sampled_data(normalized_data)
+    print("Training data size: " + str(training_data.shape) + " Testing data size: " + str(test_data.shape))
+
 
 
 
@@ -17,18 +21,23 @@ def data_reader(file_path):
 def randomly_sampled_data(data, percentage = 0.7):
     how_many_data_points_to_sample = int(np.around(data.shape[0] * percentage))
     idxs = np.random.choice(data.shape[0], size=how_many_data_points_to_sample, replace= False)
-    sampled_data = data[idxs]
-    return sampled_data
+    mask = np.zeros(data.shape[0], dtype=bool)
+    mask[idxs] = True
+    training_data = data[mask]
+    test_data = data[~mask]
+    return training_data, test_data
 
 def normalize_data(data):
     #vector normalization
     normalized_data = data / np.linalg.norm(data, axis = 1).reshape(-1,1)
     return normalized_data
 
-regression_data = data_reader("data/regression.txt")
-normalized_data = normalize_data(regression_data)
-randomly_sampled_data(normalized_data)
-#regression(regression_data)
+
+regression()
+
+
+
+
 
 
 
