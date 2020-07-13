@@ -89,8 +89,8 @@ def Ka_gradient_teta(X, y, Ka, teta1, teta2, teta3):
     grad_t2 = 0.5 * np.trace((alpha @ alpha.T - inv_Ka) @ d_k_theta2)
     grad_t3 = 0.5 * np.trace((alpha @ alpha.T - inv_Ka) @ d_k_theta3)
 
+
     return grad_t1, grad_t2, grad_t3
-    #return np.exp(minimize_t1), np.exp(minimize_t2), np.exp(minimize_t3)
 
 def regression():
     # TODO:: regression
@@ -99,9 +99,9 @@ def regression():
     X, y = regression_data[:,:7], regression_data[:,7]
     x_train, y_train, x_test, y_test = randomly_sampled_data(X, y)
     print("Training data size: " + str(x_train.shape) + " Testing data size: " + str(x_test.shape))
-    teta1 = 1
-    teta2 = 1
-    teta3 = 1
+    teta1 = 0.1
+    teta2 = 0.15
+    teta3 = 0.05
 
     learning_rate = 0.01
     iteration = 0
@@ -136,11 +136,13 @@ def predict(training_x, training_y, test_x, test_y, K):
 
 def classification(data):
     #TODO:: Classification
-    pass
+    data_classification = data_reader("data.classification.txt")
+    X, y = data_classification[:, :8], data_classification[:, 8]
+    x_train, y_train, x_test, y_test = randomly_sampled_data(X, y)
 
 
 regression()
-
+classification()
 
 
 
